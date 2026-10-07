@@ -1,23 +1,35 @@
-# COS10026 – Week 08 Labs
+# COS10026 – Week 08 Lab Exercise 1: MySQL Database
 
-This repo holds both Week 8 lab exercises. Clone it into the XAMPP `htdocs` folder as `lab08`.
+Basic MySQL database `blog_site` with two related tables, built in phpMyAdmin (XAMPP).
 
-## Lab 1 – Include files, hidden fields & Login Page with PHP
+## Tables
 
-| File | Purpose |
-|---|---|
-| `login.php` | Login form (POST to `process.php`) with a hidden token field. Uses `.php` (not `.html`) so it can `include` the header and footer. |
-| `process.php` | Starts the session, checks the username/password from `$_POST`, sets `$_SESSION['user']`, redirects to `welcome.php` or back to `login.php?error=1`. |
-| `welcome.php` | Checks `$_SESSION['user']`; shows a personalised welcome or redirects to the login page. |
-| `logout.php` | Ends the session and returns to the login page. |
-| `header.inc` / `footer.inc` | Shared page header (doctype, head, title) and footer (copyright), added with `include`. |
+**users**
 
-Open http://localhost/lab08/login.php. Log in with username `Zadeed` and student ID as the password.
+| Field | Type | Notes |
+|---|---|---|
+| user_id | INT | Primary key, auto increment |
+| username | VARCHAR(50) | |
+| email | VARCHAR(100) | |
+| is_active | BOOLEAN | Stored as TINYINT(1): true = 1, false = 0 |
 
-## Lab 1 – MySQL Database
+**posts**
 
-| File | Purpose |
-|---|---|
-| `create_blog_site.sql` | SQL that builds the `blog_site` database (`users` and `posts` tables) with sample data |
-| `blog_site.sql` | Database export from phpMyAdmin |
-| `blog.php` / `settings.php` | Optional page that displays both tables from MySQL |
+| Field | Type | Notes |
+|---|---|---|
+| post_id | INT | Primary key, auto increment |
+| user_id | INT | Foreign key → users.user_id |
+| title | VARCHAR(100) | |
+| content | TEXT | |
+
+## Files
+
+- `create_blog_site.sql` – the SQL used to create the database, tables and sample data
+- `blog_site.sql` – the database exported from phpMyAdmin (Export → SQL)
+- `blog.php` / `settings.php` – optional page that displays both tables from MySQL
+
+## How to import
+
+1. Start Apache and MySQL in XAMPP and open http://localhost/phpmyadmin
+2. Click **Import**, choose `blog_site.sql`, then click **Import** (or run `create_blog_site.sql` in the **SQL** tab)
+3. The `blog_site` database appears with 3 users and 3 posts
